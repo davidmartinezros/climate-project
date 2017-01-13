@@ -11,9 +11,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
   
-  title = 'Predicció meteorològica!';
+  title = 'El Tiempo del Viajero!';
+  //title = 'The Traveler Weather!';
 
-  municipi: string = "barcelona-id08019";
+  idioma: string = "ca";
+  //idioma: string = "es";
+
+  //municipi: string = "barcelona-id08019";
+  //municipi: string = "cadiz-id11012";
+  municipi: string = "girona-id17079";
   colorDeFons: string = "ffffff";
   amplada: string = "375";
   alcada: string = "300";
@@ -27,14 +33,16 @@ export class AppComponent implements OnInit {
   mostrarVent: string = "1";
   mostrarBorder: string = "1";
 
-  diesDePrevisio: string = "4";
+  diesDePrevisio: string = "7";
 
   colorCapcalera1: string = "4f86d9";
   colorCapcalera2: string = "95b6e9";
 
   tamanyLletraImatges: string = "8";
 
-  urlTempsMunicipi: string = "http://www.aemet.es/ca/eltiempo/prediccion/municipios/mostrarwidget/" + 
+  urlTempsMunicipi: string = "http://www.aemet.es/"+
+    this.idioma + 
+    "/eltiempo/prediccion/municipios/mostrarwidget/" + 
     this.municipi + "?w=g" + this.diesDePrevisio + "p" +
       this.mostrarVariables +
       this.mostrarEstatDelCel +
