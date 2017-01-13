@@ -1,3 +1,10 @@
 <h1>
   {{title}}
 </h1>
+
+<!--
+<script type='text/javascript' src='http://www.aemet.es/ca/eltiempo/prediccion/municipios/launchwidget/barcelona-id08019?w=g4p01111111ohmffffffw375z300x4f86d9t95b6e9r1s8n2'></script>
+<noscript><a target='_blank' style='font-weight: bold;font-size: 1.20em;' href='http://www.aemet.es/es/eltiempo/prediccion/municipios/barcelona-id08019'>El Tiempo. Consulte la predicción de la AEMET para Barcelona</a></noscript>
+-->
+
+<iframe id="iframe_aemet_id08019" name="iframe_aemet_id08019" [src]="urlTempsMunicipi | safeUrl" width="375" height="300" frameborder="0" scrolling="no"></iframe>

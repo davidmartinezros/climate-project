@@ -5,6 +5,10 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 
+import { PipesModule } from './pipes/pipes.module';
+
+import { ConsultaCiutatsService } from './consulta-ciutats.service';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -12,9 +16,10 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    PipesModule
   ],
-  providers: [],
+  providers: [ ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
