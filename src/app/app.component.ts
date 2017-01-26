@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-//import { ConsultaCiutatsService } from './consulta-ciutats.service';
+import { ConsultaCiutatsService } from './consulta-ciutats.service';
 
 //import { City } from './city';
 
@@ -13,6 +13,8 @@ export class AppComponent implements OnInit {
   
   title = 'El Tiempo del Viajero!';
   //title = 'The Traveler Weather!';
+
+  textMunicipi = "";
 
   idioma: string = "ca";
   //idioma: string = "es";
@@ -39,27 +41,35 @@ export class AppComponent implements OnInit {
   colorCapcalera2: string = "95b6e9";
 
   tamanyLletraImatges: string = "8";
+  
+  urlTempsMunicipi: string = "";
 
-  urlTempsMunicipi: string = "http://www.aemet.es/"+
-    this.idioma + 
-    "/eltiempo/prediccion/municipios/mostrarwidget/" + 
-    this.municipi + "?w=g" + this.diesDePrevisio + "p" +
-      this.mostrarVariables +
-      this.mostrarEstatDelCel +
-      this.mostrarProbPrecip +
-      this.mostrarTempMinMax +
-      this.mostrarSenTermMinMax +
-      this.mostrarHumRelMinMax +
-      this.mostrarVent +
-      this.mostrarBorder +
-      "ohm" + this.colorDeFons + "w" + this.amplada + "z" + this.alcada + "x" + this.colorCapcalera1 + "t" + this.colorCapcalera2 + "r1s" + this.tamanyLletraImatges + "n2"; 
+  reloadUrl() {
+    this.urlTempsMunicipi = "http://www.aemet.es/"+
+      this.idioma + 
+      "/eltiempo/prediccion/municipios/mostrarwidget/" + 
+      this.municipi + "?w=g" + this.diesDePrevisio + "p" +
+        this.mostrarVariables +
+        this.mostrarEstatDelCel +
+        this.mostrarProbPrecip +
+        this.mostrarTempMinMax +
+        this.mostrarSenTermMinMax +
+        this.mostrarHumRelMinMax +
+        this.mostrarVent +
+        this.mostrarBorder +
+        "ohm" + this.colorDeFons + "w" + this.amplada + "z" + this.alcada + "x" + this.colorCapcalera1 + "t" + this.colorCapcalera2 + "r1s" + this.tamanyLletraImatges + "n2"; 
+  }
 
   //cities: City[];
 
-  constructor(/*private consultaCiutatsService: ConsultaCiutatsService*/) { }
+  constructor(private consultaCiutatsService: ConsultaCiutatsService) { }
 
   ngOnInit(): void {
     //console.log('aaa');
+
+    this.consultaCiutatsService.loadMunicipis();
+
+    this.reloadUrl();
 
     //this.consultaCiutatsService.callOtherDomain();
     
@@ -71,6 +81,12 @@ export class AppComponent implements OnInit {
 
     //this.consultaCiutatsService.getCitiesByName('Barcelona').then(cities => this.cities = cities);
     //console.log('cities:' + this.cities[0].city);
+  }
+
+  buscarMunicipi(event, value) {
+    console.log("busquem:" + value);
+    this.municipi = this.consultaCiutatsService.getMunicipi(value);
+    this.reloadUrl();
   }
   
 }

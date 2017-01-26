@@ -18,11 +18,38 @@ export class ConsultaCiutatsService {
 
   //private city = '1232_en.xml';
 
+  private municipisUrl = 'assets/municipis.json';
+
   cities: string;
 
   cityInfo: string;
 
+  municipis: any;
+
+  xurroDelMunicipi: string;
+
   constructor(private http: Http) { }
+
+  loadMunicipis() {
+      this.http.get(this.municipisUrl)
+      .subscribe(
+          data => this.municipis = data.json(),
+          err => this.handleError,
+          () => {console.log('getMunicipis Complete');console.log(this.municipis);}
+      );
+  }
+
+  getMunicipi(municipi: string): string {
+    for(let object of this.municipis) {
+        //console.log(object);
+        if(object.NOMBRE == municipi) {
+            console.log('find' + object.NOMBRE);
+            console.log('info:' + object.CODAUTO + object.CPRO + object.CMUN + object.DC);
+            return object.NOMBRE.toLowerCase() + "-id" + object.CPRO + object.CMUN;
+        }
+    }
+  return "NO_TROBAT";
+  }
 
   getCities() {
     this.http.get(this.citiesUrl)

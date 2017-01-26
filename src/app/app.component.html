@@ -2,23 +2,10 @@
   {{title}}
 </h1>
 
-<div class="alinear_texto_izq paddingbottom10px paddingtop10px">
-    <form name="frmLoc" method="get" action="http://www.aemet.es/ca/eltiempo/widgets/municipios">
-      <input type="hidden" name="modo" value="and"/>
-      <input type="hidden" name="orden" value="n"/>
-      <input type="hidden" name="tipo" value="sta"/>
-      <div class="alinear_texto_izq paddingbottom15px">
-        <label class="form_nombre_campo_cabecera" for="buscar_loc">
-          Cercar municipi per nom:</label>
-      </div>
-      <div class="width100">
-          <input type="text" class="width96" value="Introdueixi municipi a cercar" name="str" id="buscar_loc" onfocus="this.value=(this.value=='Introdueixi municipi a cercar') ? '' : this.value;" onblur="this.value=(this.value=='') ? 'Introdueixi municipi a cercar' : this.value;"/>				
-        <div class="align_right">				
-          <input type="submit" value="Generar Widget" class="form_submit" /></div>
-      </div>
-    </form>
-  </div>
-
+<div>
+  <input #municipi type="text" class="width96"/>				
+  <button (click)="buscarMunicipi($event, municipi.value)" >buscar</button>
+</div>
 <!--
 <script type='text/javascript' src='http://www.aemet.es/ca/eltiempo/prediccion/municipios/launchwidget/barcelona-id08019?w=g4p01111111ohmffffffw375z300x4f86d9t95b6e9r1s8n2'></script>
 <noscript><a target='_blank' style='font-weight: bold;font-size: 1.20em;' href='http://www.aemet.es/es/eltiempo/prediccion/municipios/barcelona-id08019'>El Tiempo. Consulte la predicción de la AEMET para Barcelona</a></noscript>

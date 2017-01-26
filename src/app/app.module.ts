@@ -19,7 +19,7 @@ import { ConsultaCiutatsService } from './consulta-ciutats.service';
     HttpModule,
     PipesModule
   ],
-  providers: [ ],
-  bootstrap: [AppComponent]
+  providers: [ ConsultaCiutatsService ],
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }
