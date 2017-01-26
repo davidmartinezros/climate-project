@@ -1,16 +1,15 @@
 <h1>
-  {{title}}
+  {{titol}}
 </h1>
+<h3>
+  {{descripcio}}
+</h3>
 
 <div>
   <input #municipi type="text" class="width96"/>				
   <button (click)="buscarMunicipi($event, municipi.value)" >buscar</button>
 </div>
-<!--
-<script type='text/javascript' src='http://www.aemet.es/ca/eltiempo/prediccion/municipios/launchwidget/barcelona-id08019?w=g4p01111111ohmffffffw375z300x4f86d9t95b6e9r1s8n2'></script>
-<noscript><a target='_blank' style='font-weight: bold;font-size: 1.20em;' href='http://www.aemet.es/es/eltiempo/prediccion/municipios/barcelona-id08019'>El Tiempo. Consulte la predicción de la AEMET para Barcelona</a></noscript>
--->
 
-<iframe id="iframe_aemet_id08019" name="iframe_aemet_id08019" [src]="urlTempsMunicipi | safeUrl" width="375" height="300" frameborder="0" scrolling="no"></iframe>
+<br/>
 
-<iframe id="video_aemet" name="video_aemet" src="http://www&#46;aemet&#46;es/es/videos" width="60%" height="342" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" frameborder="0" scrolling="no"></iframe>
+<iframe id="iframe" name="iframe" [src]="urlTempsMunicipi | safeUrl" width="375" height="300" frameborder="0" scrolling="no"></iframe>

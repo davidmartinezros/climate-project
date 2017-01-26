@@ -1,36 +1,19 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http, Response } from '@angular/http';
+import { Http } from '@angular/http';
 
 import 'rxjs/Rx';
-
-import { City } from './city';
 
 @Injectable()
 export class ConsultaCiutatsService {
 
-  private headers = new Headers({'Origin': '*', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'text/plain', "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"});
-
-  private citiesUrl = 'http://worldweather.wmo.int/en/json/full_city_list.txt';
-
-  //private citiesUrl = 'full_city_list.txt';
-
-  private city = 'http://worldweather.wmo.int/en/json/234_en.xml';
-
-  //private city = '1232_en.xml';
-
   private municipisUrl = 'assets/municipis.json';
 
-  cities: string;
-
-  cityInfo: string;
-
   municipis: any;
-
-  xurroDelMunicipi: string;
 
   constructor(private http: Http) { }
 
   loadMunicipis() {
+
       this.http.get(this.municipisUrl)
       .subscribe(
           data => this.municipis = data.json(),
@@ -40,46 +23,27 @@ export class ConsultaCiutatsService {
   }
 
   getMunicipi(municipi: string): string {
-    for(let object of this.municipis) {
-        //console.log(object);
-        if(object.NOMBRE == municipi) {
-            console.log('find' + object.NOMBRE);
-            console.log('info:' + object.CODAUTO + object.CPRO + object.CMUN + object.DC);
-            return object.NOMBRE.toLowerCase() + "-id" + object.CPRO + object.CMUN;
+
+      var tittles = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç";
+      var original = "AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuunncc";
+
+      for (var i = 0; i < tittles.length; i++) {
+            municipi = municipi.replace(new RegExp(tittles.charAt(i), 'g'), original.charAt(i)).toLowerCase();
+      }
+      for(let object of this.municipis) {
+        let nomJson = object.NOMBRE;
+        for (var i = 0; i < tittles.length; i++) {
+            nomJson = nomJson.replace(new RegExp(tittles.charAt(i), 'g'), original.charAt(i)).toLowerCase();
         }
-    }
-  return "NO_TROBAT";
-  }
-
-  getCities() {
-    this.http.get(this.citiesUrl)
-    .subscribe(
-        data => this.cities = data.text(),
-        err => this.handleError,
-        () => {console.log('getCities() Complete'); console.log('cities:' + this.cities);}
-    );
-
-    /*this.http.get(this.citiesUrl, {headers: this.headers})
-        .subscribe(cities => this.cities = cities.text());
-
-    console.log(this.cities);*/
-    
-    /*this.http.get(this.citiesUrl, {headers: this.headers})
-        .map((res:Response) => res.text())
-        .subscribe(
-            data => this.cities = data,
-            err => this.handleError,
-            () => {console.log('Random Quote Complete'); console.log('cities:' + this.cities);}
-        );*/
-  }
-
-  getClimate() {
-    this.http.get(this.city)
-        .subscribe(
-            data => this.cityInfo = data.text(),
-            err => this.handleError,
-            () => {console.log('getClimate() Complete'); console.log('cityInfo:' + this.cityInfo);}
-        );
+        if(nomJson.includes(municipi)) {
+            console.log('find' + nomJson);
+            console.log('info:' + object.CODAUTO + object.CPRO + object.CMUN + object.DC);
+            let municipi = nomJson.replace(/ /g,'-').replace(/\'/g,'').replace(/,/g,'').replace(/\//g,'-');
+            console.log(municipi);
+            return municipi + "-id" + object.CPRO + object.CMUN;
+        }
+      }
+      return "NO_TROBAT";
   }
 
   private handleError(error: any): Promise<any> {
@@ -87,77 +51,4 @@ export class ConsultaCiutatsService {
       return Promise.reject(error.message || error);
   }
 
-  getCitiesHttpRequest() {
-    //do some vanilla XHR
-    var xhr = new XMLHttpRequest();
-    console.log("c");
-    xhr.open('GET', this.citiesUrl, true);
-    console.log("b");
-    xhr.onload = function () {
-        console.log("a");
-        if (this.status === 200) {
-            var blob = new Blob([xhr.response], {type: "text/plain"});
-            console.log("got result: ", xhr.response);
-        }
-    };
-    console.log("d");
-    xhr.send();
-    console.log("e");
-
-    //or if we are using jQuery...
-    /*$.get('http://xyz.example.com/secret/file.txt').done(function(data) {
-        console.log("got result: ", data);
-    });*/
-  }
-
-    invocation = new XMLHttpRequest();
-    url = 'http://worldweather.wmo.int/en/json/full_city_list.txt';
-    invocationHistoryText;
-
-    callOtherDomain(){
-        if(this.invocation) {
-            console.log(this.invocation);
-            this.invocation.open('GET', this.url, true);
-            this.invocation.onreadystatechange = function () {
-                console.log(this);
-                if (this.readyState == 4) {
-                        if (this.status == 200) {
-                            var response = this.responseXML;
-                            console.log(response);
-                        }   
-                        else {
-                            alert("Invocation Errors Occured");
-                        }
-                }
-                else {
-                    console.log("currently the application is at" + this.readyState);
-                }
-            }
-            this.invocation.send(); 
-        } else {
-            this.invocationHistoryText = "No Invocation TookPlace At All";
-            //var textNode = document.createTextNode(this.invocationHistoryText);
-            //var textDiv = document.getElementById("textDiv");
-            //textDiv.appendChild(textNode);
-            console.log(this.invocationHistoryText);
-        }
-        
-    }
-    handler(evtXHR)
-    {
-        console.log(this.invocation);
-        if (this.invocation.readyState == 4)
-        {
-                if (this.invocation.status == 200)
-                {
-                    var response = this.invocation.responseXML;
-                    console.log(response);
-                    
-                }
-                else
-                    alert("Invocation Errors Occured");
-        }
-        else
-            console.log("currently the application is at" + this.invocation.readyState);
-    }
 }

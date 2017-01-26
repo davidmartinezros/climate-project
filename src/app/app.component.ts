@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { ConsultaCiutatsService } from './consulta-ciutats.service';
 
-//import { City } from './city';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -11,17 +9,18 @@ import { ConsultaCiutatsService } from './consulta-ciutats.service';
 })
 export class AppComponent implements OnInit {
   
-  title = 'El Tiempo del Viajero!';
+  titol = '¡El Tiempo del Viajero en España!';
+  descripcio = 'Encuentra las prediciones meteorológicas de todos los municipios españoles durante los próximos cuatro días';
   //title = 'The Traveler Weather!';
 
   textMunicipi = "";
 
-  idioma: string = "ca";
-  //idioma: string = "es";
+  //idioma: string = "ca";
+  idioma: string = "es";
 
-  //municipi: string = "barcelona-id08019";
+  municipi: string = "barcelona-id08019";
   //municipi: string = "cadiz-id11012";
-  municipi: string = "girona-id17079";
+  //municipi: string = "girona-id17079";
   colorDeFons: string = "ffffff";
   amplada: string = "375";
   alcada: string = "300";
@@ -45,6 +44,7 @@ export class AppComponent implements OnInit {
   urlTempsMunicipi: string = "";
 
   reloadUrl() {
+    
     this.urlTempsMunicipi = "http://www.aemet.es/"+
       this.idioma + 
       "/eltiempo/prediccion/municipios/mostrarwidget/" + 
@@ -65,25 +65,13 @@ export class AppComponent implements OnInit {
   constructor(private consultaCiutatsService: ConsultaCiutatsService) { }
 
   ngOnInit(): void {
-    //console.log('aaa');
-
-    this.consultaCiutatsService.loadMunicipis();
-
-    this.reloadUrl();
-
-    //this.consultaCiutatsService.callOtherDomain();
     
-    //this.consultaCiutatsService.getCities();
-
-    //this.consultaCiutatsService.getClimate();
-
-    //this.consultaCiutatsService.getCitiesHttpRequest();
-
-    //this.consultaCiutatsService.getCitiesByName('Barcelona').then(cities => this.cities = cities);
-    //console.log('cities:' + this.cities[0].city);
+    this.consultaCiutatsService.loadMunicipis();
+    this.reloadUrl();
   }
 
   buscarMunicipi(event, value) {
+
     console.log("busquem:" + value);
     this.municipi = this.consultaCiutatsService.getMunicipi(value);
     this.reloadUrl();
