@@ -18,7 +18,7 @@ export class ConsultaCiutatsService {
       .subscribe(
           data => this.municipis = data.json(),
           err => this.handleError,
-          () => {console.log('getMunicipis Complete');console.log(this.municipis);}
+      () => {console.log('getMunicipis Complete');/*console.log(this.municipis);*/}
       );
   }
 
@@ -36,10 +36,10 @@ export class ConsultaCiutatsService {
             nomJson = nomJson.replace(new RegExp(tittles.charAt(i), 'g'), original.charAt(i)).toLowerCase();
         }
         if(nomJson.includes(municipi)) {
-            console.log('find' + nomJson);
-            console.log('info:' + object.CODAUTO + object.CPRO + object.CMUN + object.DC);
+            //console.log('find' + nomJson);
+            //console.log('info:' + object.CODAUTO + object.CPRO + object.CMUN + object.DC);
             let municipi = nomJson.replace(/ /g,'-').replace(/\'/g,'').replace(/,/g,'').replace(/\//g,'-');
-            console.log(municipi);
+            //console.log(municipi);
             return municipi + "-id" + object.CPRO + object.CMUN;
         }
       }
@@ -49,6 +49,13 @@ export class ConsultaCiutatsService {
   private handleError(error: any): Promise<any> {
       console.error('An error occurred', error); // for demo purposes only
       return Promise.reject(error.message || error);
+  }
+
+  loadLocation(latlon) {
+      let googleKey = "AIzaSyAzNjuCmvqM0MsWyTHT9uk_d3xob0_Iq6M";
+      let url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latlon + "&key=" + googleKey;
+
+      return this.http.get(url).map( data => data.json() );
   }
 
 }

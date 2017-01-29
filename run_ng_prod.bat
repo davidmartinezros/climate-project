@@ -1,1 +1,1 @@
-ng build --base-href http://davidmartinezros.com/Angular2/climate-project/ --prod --env=prod
+ng build --prod --env=prod
