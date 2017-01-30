@@ -17,6 +17,8 @@ export class AppComponent implements OnInit {
 
   locationInformation: any;
 
+  location: any;
+
   municipi: string = "";
   //municipi: string = "barcelona-id08019";
   //municipi: string = "cadiz-id11012";
@@ -136,19 +138,9 @@ export class AppComponent implements OnInit {
   }
 
   loadLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(this.successShowPosition.bind(this), this.failureShowPosition.bind(this));
-    } else {
-        console.log("Geolocation is not supported by this browser.");
-    }
-  }
-
-  successShowPosition(position) {
     //console.log("showPosition");
 
     //console.log(position);
-
-    var latlon = position.coords.latitude + "," + position.coords.longitude;
 
     //console.log(latlon);
 
@@ -156,18 +148,26 @@ export class AppComponent implements OnInit {
 
     //console.log(this.googleUrl);
 
-    this.consultaCiutatsService.loadLocation(latlon)
-      .subscribe(
-        data => this.locationInformation = data,
-        err => this.handleError,
-        () => {
-          console.log('loadLocation Complete');
-          let value = this.getLocation();
-          this.municipi = this.consultaCiutatsService.getMunicipi(value);
-          this.reloadUrl();
+    this.consultaCiutatsService.getLocation()
+    .subscribe (
+      data => this.location = data,
+      err => this.handleError,
+      () => {
+        var latlon = this.location.location.lat + "," + this.location.location.lng;
+        this.consultaCiutatsService.loadLocation(latlon)
+          .subscribe(
+            data => this.locationInformation = data,
+            err => this.handleError,
+            () => {
+              console.log('loadLocation Complete');
+              let value = this.getLocation();
+              this.municipi = this.consultaCiutatsService.getMunicipi(value);
+              this.reloadUrl();
+            }
+          )
         }
       );
-  }
+    }
 
   failureShowPosition(failure) {
     console.log(failure);

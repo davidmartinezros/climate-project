@@ -52,10 +52,17 @@ export class ConsultaCiutatsService {
   }
 
   loadLocation(latlon) {
-      let googleKey = "AIzaSyAzNjuCmvqM0MsWyTHT9uk_d3xob0_Iq6M";
+      let googleKey = "AIzaSyAMyGS2s3c0Tp9EQ9GFEj7E-JmdJuDE4D8";
       let url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latlon + "&key=" + googleKey;
 
       return this.http.get(url).map( data => data.json() );
+  }
+
+  getLocation() {
+    let googleKey = "AIzaSyAMyGS2s3c0Tp9EQ9GFEj7E-JmdJuDE4D8";
+    let url = "https:///maps.googleapis.com/geolocation/v1/geolocate?key=" + googleKey;
+    
+    return this.http.get(url).map( data => data.json() );
   }
 
 }
